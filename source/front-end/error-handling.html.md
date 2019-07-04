@@ -2,215 +2,92 @@
 title: "Frontend error catching <sup>beta</sup>"
 ---
 
+Good news! 🎉
+
+We now have a first-class, hosted solution for catching errors from front-end JavaScript applications and sending them to AppSignal. This means no more copy-and-pasted code from the documentation, or using an endpoint in your own API to catch errors. We now host the infrastructure, and provide a new `npm` library for catching JavaScript errors. Awesome!
+
 This is a __Beta__ implementation, which means:
 
-* There is no official JavaScript library supported by AppSignal.
-* The API might change in the future to support more frameworks.
-* This feature is not enabled by default and requires a setup that uses an `appsignal.yml` config file.
-
-Starting with AppSignal for Ruby gem version <strong>0.11.8</strong> and up we've added a frontend error catcher to our gem.
-
-For use with AppSignal for Elixir, there's an unofficial plug available on GitHub at [tombruijn/appsignal-elixir_js_plug](https://github.com/tombruijn/appsignal-elixir_js_plug).
+* This feature is not available for all users initially.
+* Although you should expect few changes, the API may change before public release.
 
 ## Table of Contents
 
+- [Creating a Push API Key](#creating-a-push-api-key)
 - [Installation](#installation)
-  - [Ruby](#installation-ruby)
-  - [Elixir](#installation-elixir)
 - [Configuration](#configuration)
-  - [Ruby](#configuration-ruby)
-      - [Path](#configuration-ruby-path)
-  - [Elixir](#configuration-elixir)
-- [Request parameters](#request-parameters)
-- [Example of an error JSON POST](#example-of-an-error-json-post)
-- [A sample implementation in EcmaScript 2017](#a-sample-implementation-in-ecmascript-2017)
+- [Plugins](#plugins)
+- [Integration](#integration)
+
+!> **NOTE:** Uncaught exceptions are **not** captured by default. We made the decision to not include this functionality as part of the core library due to the high amount of noise from browser extensions, ad blockers etc. that generally makes libraries such as this less effective. We recommend using a relevant [integration](about:blank#integrations) as a better way to handle exceptions, or, if you *would* prefer capture uncaught exceptions, you can do so by using the `@appsignal/plugin-window-events` package alongside this one (available soon).
+
+## Creating a Push API Key
+
+@TODO
 
 ## Installation
 
-###^installation Ruby
+First, add the `@appsignal/javascript` package to your `package.json`. Then, run `yarn install`/`npm install`.
 
-If you are using Ruby on Rails, it's included automatically, but still requires some configuration (see below). For Sinatra/Rack apps you need to require the `JSExceptionCatcher` middleware.
+You can also add these packages to your `package.json` on the command line:
 
-```ruby
-::Sinatra::Application.use(Appsignal::Rack::JSExceptionCatcher)
+```bash
+yarn add @appsignal/javascript
+npm install --save @appsignal/javascript
 ```
 
-###^installation Elixir
+You can then import and use the package in your bundle:
 
-Add the `appsignal_js_plug` package as a dependency in your `mix.exs` file.
+```javascript
+import Appsignal from "@appsignal/javascript" // For ES Module
+const Appsignal = require("@appsignal/javascript").default // For CommonJS module
 
-```elixir
-# mix.exs
-def deps do
-  [
-    {:appsignal, "~> 1.3"},
-    {:appsignal_js_plug, "~> 0.1.0"}
-  ]
-end
+const appsignal = new Appsignal({ 
+  key: "YOUR FRONTEND API KEY"
+})
 ```
 
-Add the following to your `endpoint.ex` file.
+It’s recommended (although not necessarily required) to use the instance of the `Appsignal` object like a singleton. One way that you can do this is by `export`ing an instance of the library from a `.js`/`.ts` file somewhere in your project.
 
-```elixir
-# lib/your_app/endpoint.ex
-plug Plug.Parsers,
-  parsers: [:urlencoded, :multipart, :json],
-  pass: ["*/*"],
-  json_decoder: Poison
+```javascript
+import Appsignal from "@appsignal/javascript"
 
-use Appsignal.Phoenix # Below the AppSignal (Phoenix) plug
-plug Appsignal.JSPlug
+export default new Appsignal({
+  key: "YOUR FRONTEND API KEY"
+})
 ```
+
+Currently, we have no plans to supply a CDN-hosted version of this library.
 
 ## Configuration
 
-###^configuration Ruby
+### `Appsignal` options
 
-Enable frontend error catching by enabling `enable_frontend_error_catching`  in the `appsignal.yml` config file.
-
-```yml
-staging:
-  <<: *defaults
-  active: true
-  enable_frontend_error_catching: true
-```
-
-####^configuration-ruby Path
-
-The Rack middleware will expose the following error catcher path `/appsignal_error_catcher`. You can change this path by adding `frontend_error_catching_path` to your `appsignal.yml` config file:
-
-```yml
-staging:
-  <<: *defaults
-  active: true
-  enable_frontend_error_catching: true
-  frontend_error_catching_path: '/foo/bar'
-```
-
-This path will accept POST requests that contain frontend errors in a JSON format.
-The gem will take care of processing it and sending it to AppSignal.
-
-###^configuration Elixir
-
-See the README at [tombruijn/appsignal-elixir_js_plug](https://github.com/tombruijn/appsignal-elixir_js_plug) for instructions.
-
-## Request parameters
+The `Appsignal` object can be initialized with the following options:
 
 | Param | Type | Description  |
 | ------ | ------ | ----- |
-|  action  |  string  |   model/view/component that triggered the exception  |
-|  message  |  string  |  exception message  |
-|  name  |  string  |   exception name  |
-|  backtrace  |  array  |   array of backtrace lines (strings)  |
-|  path  |  string  |   path where the exception happened  |
-|  params  |  hash/object  |   hash/object of request params |
-|  tags  |  hash/object  |   hash/object of tags (e.g. logged in user id)  |
-|  environment  |  hash/object  |   hash/object of environment variables  |
+|  key  |  string  |  Your AppSignal Push API key  |
+|  uri  |  string  |  (optional) The full URI of an AppSignal Push API endpoint  |
+|  namespace  |  string  |   (optional) A namespace for errors  |
+|  revision  |  string  |   (optional) A Git SHA of the current revision |
 
+## Plugins
 
-## Example of an error JSON POST
-
-The `action`, `message`, `name` and `backtrace` field are required. If they are not
-set the error will not be processed.
-
-```json
-{
-  "action": "IncidentIndexComponent",
-  "message": "Foo is not defined",
-  "name": "ReferenceError",
-  "backtrace": [
-    "a/backtrace/line.js:10"
-  ],
-  "path": "/foo/bar",
-  "tags": {
-    "user_id": 123
-  },
-  "environment": {
-    "agent": "Mozilla Firefox",
-    "platform": "OSX",
-    "vendor": "",
-    "screen_width": 100,
-    "screen_height": 100
-  }
-}
-```
-
-## A sample implementation in EcmaScript 2017
-
-Currently we do not provide a JavaScript package that catches frontend errors.
-The EcmaScript example below is something we use to test the functionality, use and modify at your own risk.
+The `Appsignal` object can take one or many optional “plugins” that can extend the base functionality of the library e.g. for handling uncaught exceptions via `window.error` or `onunhandledpromiserejection`.
 
 ```javascript
-// ES2017 example
-//
-// appsignal = new Appsignal
-// appsignal.tagRequest({ user_id: 123 })
-// appsignal.setAction("ErrorTest")
-//
-// try {
-//   adddlert("Welcome guest!")
-// } catch (error) {
-//   appsignal.sendError(error)
-// }
-class Appsignal {
-  constructor() {
-    this.action = null
-    this.tags = {}
-  }
-
-  setAction(action) {
-    this.action = action
-  }
-
-  tagRequest(tags) {
-    const result = []
-    for (const key in tags) {
-      const value = tags[key]
-      this.tags[key] = value
-      result.push(this.tags[key])
-    }
-    result
-  }
-
-  sendError(error) {
-    this.pushData({
-      action:    this.action,
-      name:      error.name,
-      message:   error.message,
-      backtrace: (error.stack != null ? error.stack.split("\n") : undefined),
-      path:      window.location.pathname,
-      tags:      this.tags,
-      environment: {
-        agent:         window.navigator.userAgent,
-        platform:      window.navigator.platform,
-        vendor:        window.navigator.vendor,
-        screen_width:  window.screen.width,
-        screen_height: window.screen.height
-      }
-    })
-  }
-
-  pushData(data) {
-    const xhr = new XMLHttpRequest()
-    xhr.open("POST", "/appsignal_error_catcher", true)
-    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
-    xhr.send(JSON.stringify(data))
-  }
-}
-
-window.appsignal = new Appsignal
-
-window.onerror = function(message, filename, lineno, colno, error) {
-  if (error) {
-    window.appsignal.sendError(error)
-  } else {
-    window.appsignal.sendError(new Error("Null error raised, no exception message available"))
-  }
-}
+import { plugin } from `appsignal/plugin-${PLUGIN_NAME}`
+appsignal.use(plugin())
 ```
 
-Here at AppSignal we're very keen on "eating our own dogfood". This means we use AppSignal to monitor AppSignal and since we're rewriting most of our frontend code to ReactJS we decided that we need to monitor it.
+@TODO: add more on plugins
 
-Once we get a good feel of the requirements for JavaScript error catching we plan on supporting an official library that hopefully will support vanilla JS and all the popular frontend frameworks.
+## Integrations
 
-You are welcome to try frontend error catching as well and we really like to hear feedback on our implementation. If you have any questions or suggestions, don't hesitate to contact us on <a href="mailto:contact@appsignal.com">contact@appsignal.com</a>.
+An integration is a module that can consume the `Appsignal` object to catch errors from popular libraries or frameworks. These integrations may come in a variety of different forms, and we aim to generally provide APIs that are consistent, and feel idiomatic to use, with the libraries and/or frameworks that you’re using.
+
+These currently include:
+
+- React (beta) - `@appsignal/react`
+- Vue (beta) - `@appsignal/vue`
