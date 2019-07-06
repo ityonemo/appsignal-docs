@@ -4,11 +4,11 @@ title: "Frontend error catching <sup>beta</sup>"
 
 Good news! 🎉
 
-We now have a first-class, hosted solution for catching errors from front-end JavaScript applications and sending them to AppSignal. This means no more copy-and-pasted code from the documentation, or using an endpoint in your own API to catch errors. We now host the infrastructure, and provide a new `npm` library for catching JavaScript errors. Awesome!
+AppSignal has a first-class, hosted solution for catching errors from front-end JavaScript applications and sending them to AppSignal. An `npm` library for catching JavaScript errors is available for all your front-end needs.
 
 This is a __Beta__ implementation, which means:
 
-* This feature is not available for all users initially.
+* This feature is not yet available for all users.
 * Although you should expect few changes, the API may change before public release.
 
 ## Table of Contents
@@ -67,8 +67,8 @@ The `Appsignal` object can be initialized with the following options:
 
 | Param | Type | Description  |
 | ------ | ------ | ----- |
-|  key  |  string  |  Your AppSignal Push API key  |
-|  uri  |  string  |  (optional) The full URI of an AppSignal Push API endpoint  |
+|  key  |  String  |  Your AppSignal Push API key  |
+|  uri  |  string  |  (optional) The full URI of an AppSignal Push API endpoint. This setting will not have to be changed. |
 |  namespace  |  string  |   (optional) A namespace for errors  |
 |  revision  |  string  |   (optional) A Git SHA of the current revision |
 
