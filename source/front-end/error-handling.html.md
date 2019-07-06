@@ -2,92 +2,38 @@
 title: "Frontend error catching <sup>beta</sup>"
 ---
 
-Good news! 🎉
+## Track any error
 
-AppSignal has a first-class, hosted solution for catching errors from front-end JavaScript applications and sending them to AppSignal. An `npm` library for catching JavaScript errors is available for all your front-end needs.
-
-This is a __Beta__ implementation, which means:
-
-* This feature is not yet available for all users.
-* Although you should expect few changes, the API may change before public release.
-
-## Table of Contents
-
-- [Creating a Push API Key](#creating-a-push-api-key)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Plugins](#plugins)
-- [Integration](#integration)
-
-!> **NOTE:** Uncaught exceptions are **not** captured by default. We made the decision to not include this functionality as part of the core library due to the high amount of noise from browser extensions, ad blockers etc. that generally makes libraries such as this less effective. We recommend using a relevant [integration](about:blank#integrations) as a better way to handle exceptions, or, if you *would* prefer capture uncaught exceptions, you can do so by using the `@appsignal/plugin-window-events` package alongside this one (available soon).
-
-## Creating a Push API Key
-
-@TODO
-
-## Installation
-
-First, add the `@appsignal/javascript` package to your `package.json`. Then, run `yarn install`/`npm install`.
-
-You can also add these packages to your `package.json` on the command line:
-
-```bash
-yarn add @appsignal/javascript
-npm install --save @appsignal/javascript
-```
-
-You can then import and use the package in your bundle:
+Catch an error and report it to AppSignal:
 
 ```javascript
-import Appsignal from "@appsignal/javascript" // For ES Module
-const Appsignal = require("@appsignal/javascript").default // For CommonJS module
+try {
+  // do something that might throw an error
+} catch (error) {
+  appsignal.sendError(error)
+  // handle the error}
 
-const appsignal = new Appsignal({ 
-  key: "YOUR FRONTEND API KEY"
-})
+// You can catch errors asynchronously by listening to Promises...
+asyncActionThatReturnsAPromise().catch(error => appsignal.sendError(error))
+
+// ...or by using async/await
+async function() {
+  try {
+    const result = await asyncActionThatReturnsAPromise()
+  } catch (error) {
+    appsignal.sendError(error)
+    // handle the error}
+  }
+
+// ...or in an event handler or callback function
+
+events.on("event", (err) => { appsignal.sendError(err) })
 ```
 
-It’s recommended (although not necessarily required) to use the instance of the `Appsignal` object like a singleton. One way that you can do this is by `export`ing an instance of the library from a `.js`/`.ts` file somewhere in your project.
+### Uncaught exceptions
 
-```javascript
-import Appsignal from "@appsignal/javascript"
+Uncaught exceptions are **not** captured by default. We made the decision to not include this functionality as part of the core library due to the high amount of noise from browser extensions, ad blockers etc. that generally makes libraries such as this less effective.
 
-export default new Appsignal({
-  key: "YOUR FRONTEND API KEY"
-})
-```
+We recommend using a relevant [integration](about:blank#integrations) as a better way to handle exceptions, or, if you *would* prefer capture uncaught exceptions, you can do so by using the `@appsignal/plugin-window-events` package alongside this one (available soon).
 
-Currently, we have no plans to supply a CDN-hosted version of this library.
 
-## Configuration
-
-### `Appsignal` options
-
-The `Appsignal` object can be initialized with the following options:
-
-| Param | Type | Description  |
-| ------ | ------ | ----- |
-|  key  |  String  |  Your AppSignal Push API key  |
-|  uri  |  string  |  (optional) The full URI of an AppSignal Push API endpoint. This setting will not have to be changed. |
-|  namespace  |  string  |   (optional) A namespace for errors  |
-|  revision  |  string  |   (optional) A Git SHA of the current revision |
-
-## Plugins
-
-The `Appsignal` object can take one or many optional “plugins” that can extend the base functionality of the library e.g. for handling uncaught exceptions via `window.error` or `onunhandledpromiserejection`.
-
-```javascript
-import { plugin } from `appsignal/plugin-${PLUGIN_NAME}`
-appsignal.use(plugin())
-```
-
-@TODO: add more on plugins
-
-## Integrations
-
-An integration is a module that can consume the `Appsignal` object to catch errors from popular libraries or frameworks. These integrations may come in a variety of different forms, and we aim to generally provide APIs that are consistent, and feel idiomatic to use, with the libraries and/or frameworks that you’re using.
-
-These currently include:
-
-- React (beta) - `@appsignal/react`
-- Vue (beta) - `@appsignal/vue`
