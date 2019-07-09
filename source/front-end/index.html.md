@@ -9,6 +9,8 @@ This is a __Beta__ implementation, which means:
 * This feature is not yet available for all users.
 * Although you should expect few changes, the API may change before public release.
 
+Although this is a beta version, we already use it to monitor errors right here on AppSignal.com! We can say with high confidence that you can safely start using this in your frontend apps today.
+
 ## Table of Contents
 
 - [Installation](/front-end/installation.html)
