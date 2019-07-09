@@ -11,13 +11,14 @@ This is a __Beta__ implementation, which means:
 
 ## Table of Contents
 
-- [Creating a Push API Key](#creating-a-push-api-key)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Plugins](#plugins)
-- [Integration](#integration)
+- [Catching errors](#configuration)
+- [Integrations](#configuration)
+  - [React](#configuration)
+- [Plugins](#configuration)
+  - [plugin-window-events](#configuration)
 
-!> **NOTE:** Uncaught exceptions are **not** captured by default. 
+!> **NOTE:** Uncaught exceptions are **not** captured by default. [Read this section to find out why](). You can enable this functionality by enabling the [`plugin-window-events`]() plugin.
 
 ## Creating a Push API Key
 

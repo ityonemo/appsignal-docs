@@ -2,8 +2,6 @@
 title: "Installing AppSignal for JavaScript"
 ---
 
-## Installation
-
 First, add the `@appsignal/javascript` package to your `package.json`. Then, run `yarn install`/`npm install`.
 
 You can also add these packages to your `package.json` on the command line:
@@ -35,3 +33,9 @@ export default new Appsignal({
 ```
 
 Currently, we have no plans to supply a CDN-hosted version of this library.
+
+### Supported browsers
+
+This package can be used in any ECMAScript 5 compatible browser. We aim for compatibility down to Internet Explorer 9 [(roughly 0.22% of all browsers used today)](https://www.w3counter.com/globalstats.php). All browsers older than this can only supported on a “best effort” basis, and full functionality cannot be guaranteed.
+
+When developing, don’t forget to check browser support on [Can I Use?](https://caniuse.com/) and the [ES6 Compatibility Table](https://kangax.github.io/compat-table/es6/), and provide the appropriate polyfills or fallbacks. **In a small percentage of browsers, a `Promise` polyfill may be required to use this library.**
