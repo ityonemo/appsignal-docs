@@ -2,7 +2,7 @@
 title: "AppSignal for JavaScript"
 ---
 
-AppSignal has a first-class, hosted solution for catching errors from front-end JavaScript applications and sending them to AppSignal. An `npm` library for catching JavaScript errors is available for all your front-end needs.
+AppSignal has a first-class, solution for catching errors from front-end JavaScript applications and sending them to AppSignal. An `npm` library for catching JavaScript errors is available for all your front-end needs.
 
 This is a __Beta__ implementation, which means:
 

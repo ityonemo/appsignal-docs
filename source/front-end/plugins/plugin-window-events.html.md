@@ -10,4 +10,3 @@ The `Appsignal` object can take one or many optional “plugins” that can exte
 import { plugin } from `appsignal/plugin-${PLUGIN_NAME}`
 appsignal.use(plugin())
 ```
-
