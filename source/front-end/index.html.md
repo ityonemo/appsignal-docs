@@ -11,14 +11,14 @@ This is a __Beta__ implementation, which means:
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Catching errors](#configuration)
-- [Integrations](#configuration)
-  - [React](#configuration)
-- [Plugins](#configuration)
-  - [plugin-window-events](#configuration)
+- [Installation](/front-end/installation.html)
+- [Error handling](/front-end/error-handling.html)
+- [Integrations](/front-end/integrations/)
+  - [React](/front-end/integrations/react.html)
+- [Plugins](/front-end/plugins/)
+  - [plugin-window-events](/front-end/plugins/plugin-window-events.html)
 
-!> **NOTE:** Uncaught exceptions are **not** captured by default. [Read this section to find out why](). You can enable this functionality by enabling the [`plugin-window-events`]() plugin.
+!> **NOTE:** Uncaught exceptions are **not** captured by default. [Read this section to find out why](/front-end/error-handling.html#uncaught-exceptions). You can enable this functionality by enabling the [`plugin-window-events`](/front-end/plugins/plugin-window-events.html) plugin.
 
 ## Creating a Push API Key
 

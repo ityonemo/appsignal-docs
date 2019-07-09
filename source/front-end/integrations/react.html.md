@@ -35,17 +35,18 @@ const FallbackComponent = () => (
 
 const App = () => (
   <ErrorBoundary instance={appsignal} fallback={(error) => <FallbackComponent />}>
-  
+    { /** Child components here **/}
   </ErrorBoundary>
 )
 
 ReactDOM.render(<App />, document.getElementById("root"))
 ```
 
-
 ### Legacy Boundary
 
 !> The API that this component uses is unstable at this point in React's development. We offer this component as a means to support those running React v15, but do not guarantee its reliablity. You are encouraged to use the `ErrorBoundary` whenever possible.
+
+The `LegacyBoundary` works in almost exactly the same way as the `ErrorBoundary`:
 
 ```jsx
 import React from "react"
@@ -63,7 +64,7 @@ const FallbackComponent = () => (
 
 const App = () => (
   <LegacyBoundary instance={appsignal} fallback={(error) => <FallbackComponent />}>
-  
+    { /** Child components here **/}
   </LegacyBoundary>
 )
 

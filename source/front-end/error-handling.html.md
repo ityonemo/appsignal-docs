@@ -33,4 +33,4 @@ events.on("event", (err) => { appsignal.sendError(err) })
 
 Uncaught exceptions are **not** captured by default. We made the decision to not include this functionality as part of the core library due to the high amount of noise from browser extensions, ad blockers etc. that generally makes libraries such as this less effective.
 
-We recommend using a relevant [integration](about:blank#integrations) as a better way to handle exceptions, or, if you *would* prefer capture uncaught exceptions, you can do so by using the `@appsignal/plugin-window-events` package alongside this one (available soon).
+We recommend using a relevant [integration](/front-end/integrations/) as a better way to handle exceptions, or, if you *would* prefer capture uncaught exceptions, you can do so by using the [`@appsignal/plugin-window-events`](/front-end/plugins/plugin-window-events.html) package alongside this one.
