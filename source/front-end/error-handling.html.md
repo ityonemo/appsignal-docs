@@ -2,7 +2,7 @@
 title: "Frontend error catching <sup>beta</sup>"
 ---
 
-Catch an error and report it to AppSignal:
+To catch an error and report it to AppSignal, add this to your code:
 
 ```javascript
 try {
