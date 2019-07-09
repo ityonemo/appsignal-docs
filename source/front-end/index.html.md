@@ -24,4 +24,4 @@ Although this is a beta version, we already use it to monitor errors right here 
 
 ## Creating a Push API Key
 
-@TODO
+Before you begin, you'll need to locate your Push API key. Finding this is easy - look for the ["Push and deploy" section](https://appsignal.com/redirect-to/app?to=info) of your App settings page. You'll be able to find your API key under the "Front-end error monitoring". Once you have your key, follow the instructions under the [Installation](/front-end/installation.html) section to use it in your application.
