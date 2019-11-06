@@ -19,8 +19,8 @@ set :js_dir, "assets/javascripts"
 set :images_dir, "assets/images"
 
 activate :syntax,
-  :line_numbers => true,
-  :css_class => "code-block"
+  :line_numbers => false,
+  :css_class => "c-code c-code--dark"
 
 activate :external_pipeline,
   name: :webpack,

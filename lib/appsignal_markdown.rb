@@ -85,7 +85,7 @@ class AppsignalMarkdown < Middleman::Renderers::MiddlemanRedcarpetHTML
     else
       anchor = FormatHelpersWrapper.strip_tags(text).parameterize
     end
-    %(<h%s><span class="anchor" id="%s"></span><a href="#%s">%s</a></h%s>) % [level, anchor, anchor, text, level]
+    %(<h%s><span class="anchor" id="%s"></span><a name="#%s">%s</a></h%s>) % [level, anchor, anchor, text, level]
   end
 
   private
@@ -93,8 +93,8 @@ class AppsignalMarkdown < Middleman::Renderers::MiddlemanRedcarpetHTML
   # Add custom tags to content
   def add_custom_tags(text)
     map = {
-      "-&gt;" => "notice",
-      "!&gt;" => "warning"
+      "-&gt;" => "c-message--notice",
+      "!&gt;" => "c-message--error"
     }
     regexp = map.map { |k, _| Regexp.escape(k) }.join("|")
 
@@ -106,7 +106,7 @@ class AppsignalMarkdown < Middleman::Renderers::MiddlemanRedcarpetHTML
     text.gsub!(/#{Regexp.escape(key)}\s+?/, "")
 
     <<-EOH.gsub(/^ {8}/, "")
-      <div class="custom-wrapper #{klass}">#{text}</div>
+      <p class="c-message #{klass}">#{text}</p>
     EOH
   end
 end
