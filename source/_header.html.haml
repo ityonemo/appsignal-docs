@@ -1,21 +1,26 @@
-%header{:class => "flex justify-between items-center px-6 h-16"}
+- linkClass = "no-underline hover:text-blue-500 px-4 py-2 block"
+
+%header.flex.justify-between.items-center.px-6.h-16.border-b.bg-white
   = link_to '/', :title => "return to the homepage of AppSignal" do
     = image_tag "dl_logo/appsignal-logo.svg", :alt => "Logo of AppSignal", :class => "block h-6"
 
   %nav
     %ul.flex
-      %li.mr-4= link_to 'Home', 'https://appsignal.com'
-      %li.mr-4
-        = link_to "Tour", "#subnav"
-        %ul.hidden
-          - data.tours.tours.each do |tour|
-            %li.mr-4= link_to tour['title'], "https://appsignal.com/tour/#{tour['slug']}"
-          %li.mr-4= link_to "AppSignal for Elixir", "https://appsignal.com/elixir/"
-          %li.mr-4= link_to "JavaScript error tracking", "https://appsignal.com/javascript/"
+      %li.mr-4= link_to 'Home', 'https://appsignal.com', :class => linkClass
+      %li.mr-4.group
+        = link_to "Tour", "#subnav", :class => linkClass
+        %div.c-box.absolute.invisible.group-hover:visible.py-2
+          %ul
+            - data.tours.tours.each do |tour|
+              %li= link_to tour['title'], "https://appsignal.com/tour/#{tour['slug']}", :class => linkClass
+          %hr.my-4
+          %ul
+            %li.mr-4= link_to "AppSignal for Elixir", "https://appsignal.com/elixir/", :class => linkClass
+            %li.mr-4= link_to "JavaScript error tracking", "https://appsignal.com/javascript/", :class => linkClass
 
-      %li.mr-4= link_to 'Docs', 'http://docs.appsignal.com', :class => "active"
-      %li.mr-4= link_to 'Blog', 'http://blog.appsignal.com'
-      %li.mr-4= link_to 'Pricing', 'https://appsignal.com/plans/'
+      %li.mr-4= link_to 'Docs', 'http://docs.appsignal.com', :class => "active", :class => linkClass
+      %li.mr-4= link_to 'Blog', 'http://blog.appsignal.com', :class => linkClass
+      %li.mr-4= link_to 'Pricing', 'https://appsignal.com/plans/', :class => linkClass
 
   %nav
     %ul.flex

@@ -29,13 +29,13 @@
 
   %body
     .grid-docs
-      .grid-docs-header.border-b.bg-white
-        = partial "header"
+      .grid-docs-header= partial "header"
+
       %a.jump.hidden{href: "#navigation"} Documentation navigation
 
       %nav.grid-docs-nav.border-r.overflow-y-auto.relative.bg-gray-100
-        .sticky.top-0.p-6.bg-gradient= partial "docsearch"
-        .px-6.pb-6= partial "side_nav"
+        = partial "docsearch"
+        = partial "side_nav"
 
       .grid-docs-content.overflow-y-auto
         .max-w-2xl.m-auto.my-12= yield

@@ -1,16 +1,16 @@
-%footer.bg-gray-100.pb-6
+%footer.bg-gray-100.px-6.py-12
   .grid.max-w-2xl.m-auto
-    %p.column-12.py-6.border-b
-      %i.fa.fa-github
+    %p.column-12.flex.justify-between.items-center
       Want to help us improve this documentation page? #{edit_link}
 
+    %hr.column-12
 
     %section.column-6
-      %h3.c-h-caps Need more help?
+      %h3.c-h3 Need more help?
       %p.c-p-sm Contact us and speak directly with the engineers working on AppSignal. They will help you get set up, tweak your code and make sure you get the most out of using AppSignal.
       = link_to "Contact us", "mailto:support@appsignal.com", :class => "c-button c-button--white"
 
     %section.column-6
-      %h3.c-h-caps Start a trial - 30 days free
+      %h3.c-h3 Start a trial - 30 days free
       %p.c-p-sm AppSignal is a great way to monitor your Ruby and Elixir applications. Works great with Rails, Phoenix and other frameworks, with support for background jobs too. Let"s improve your apps together.
       = link_to "Start a trial", "https://appsignal.com/plans", :class => "c-button c-button--white"

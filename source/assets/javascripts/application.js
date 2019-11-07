@@ -5,34 +5,36 @@ import "./dl_header"
 import { loadAnalyticsScripts } from "./analytics"
 
 $(document).ready(function() {
-  var navigationElement = $("#navigation");
-  var navigationElements = $(".mod-side_nav h2");
+  var navigationElement = $("nav");
+  var navigationElements = $("nav h2");
 
   // Open getting started on first visit
-  if(!NavigationStore.isSet("getting-started")) {
-    NavigationStore.set("getting-started", true);
+  if(!NavigationStore.isSet("start")) {
+    NavigationStore.set("start", true);
   }
 
   // Make sure the section of the current page is open
-  var currentMenu = navigationElement.find("a.active").parents(".section").find("h2").data("menu");
+  var currentMenu = navigationElement.find("a.active").parents("nav").find("h2").data("menu");
   if(currentMenu) {
     NavigationStore.set(currentMenu, true);
   }
 
   // Toggle open state on navigation heading click
   navigationElements.on("click", function() {
-    var element = $(this);
-    var state = !element.hasClass("open");
+    var element = $(this).next();
+    console.log(element);
+    var state = !element.hasClass("hidden");
+    console.log(state);
 
-    element.toggleClass("open", state);
+    element.toggleClass("hidden", state);
     NavigationStore.set(element.data("menu"), state);
   });
 
   // Open those elements that have been open by the user.
   navigationElements.each(function() {
-    var element = $(this);
+    var element = $(this).next();
     if(NavigationStore.fetch(element.data("menu"))) {
-      element.addClass("open");
+      element.addClass("hidden");
     }
   });
 
@@ -57,7 +59,7 @@ $(document).ready(function() {
   }
 
   if (userSignedIn || Cookies.get("cookie_consent") == "true") {
-    $(".mod-cookies").hide();
+    $("#cookies").hide();
     loadAnalyticsScripts();
   }
 
@@ -75,9 +77,9 @@ $(document).ready(function() {
     document.body.appendChild(img);
   }
 
-  $(".mod-cookies .accept_link").click(function(e) {
+  $("#cookies #accept_link").click(function(e) {
     e.preventDefault();
-    $(".mod-cookies").hide();
+    $("#cookies").hide();
 
     var consent_src = "https://appsignal.com/cookie_consent.gif";
     var img = document.createElement("img");
