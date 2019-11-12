@@ -20,7 +20,7 @@ set :images_dir, "assets/images"
 
 activate :syntax,
   :line_numbers => false,
-  :css_class => "c-code c-code--dark"
+  :css_class => "c-code c-code--white shadow mb-4 -mx-4"
 
 activate :external_pipeline,
   name: :webpack,
