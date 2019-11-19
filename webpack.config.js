@@ -19,14 +19,6 @@ module.exports = {
         ],
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
-        ],
-      },
-      {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           "file-loader"
