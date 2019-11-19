@@ -1,19 +1,15 @@
-window.NavigationStore = function() {
-  function isSet(menu) {
+class NavigationStore {
+  static isSet(menu) {
     return localStorage["navigation_" + menu] !== undefined;
   }
 
-  function fetch(menu) {
+  static fetch(menu) {
     return localStorage["navigation_" + menu] == "true" || false;
   }
 
-  function set(menu, value) {
+ static set(menu, value) {
     localStorage["navigation_" + menu] = value;
   }
+}
 
-  return {
-    isSet: isSet,
-    fetch: fetch,
-    set: set
-  }
-}();
+export default NavigationStore

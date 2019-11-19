@@ -1,6 +1,5 @@
 %nav.text-sm
   %div.p-6.border-t
-    %h2.c-h-caps.text-xs{:data => { :menu => "start" } } Start
     %ul
       %li= link_with_active "Start", "/", :class => "c-nav-link"
       %li= link_with_active "FAQs", "/faq.html", :class => "c-nav-link"
@@ -217,7 +216,7 @@
       %li= link_to "Contact us!", "mailto:support@appsignal.com"
       %li= link_with_active "Debugging AppSignal", "/support/debugging.html", :class => "c-nav-link"
       %li= link_with_active "Supported Operating Systems", "/support/operating-systems.html", :class => "c-nav-link"
-      %li= link_with_active "Known issues", "/support/known-issues.html", :parent_active => true, :class => "c-nav-link"
+      %li= link_with_active "Known issues", "/support/known-issues.html", :class => "c-nav-link"
       %li= link_to "Service status page", "https://status.appsignal.com"
 
   %div.p-6.border-t
