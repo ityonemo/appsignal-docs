@@ -83,12 +83,11 @@ helpers do
     else
       name, path, options = args
     end
+
     options ||= {}
-    options[:class] = options[:class].to_s
-    options[:class] += " active" if path == current_page.url
-    if options.delete(:parent_active) && current_page.url.start_with?(path.sub(".html", "/"))
-      options[:class] += " active"
-    end
+    options[:data] ||=  {}
+
+    options[:data][:behaviour] = "active" if path == current_page.url
 
     new_args =
       if block_given?

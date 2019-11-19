@@ -33,7 +33,7 @@
 
       %a.jump.hidden{href: "#navigation"} Documentation navigation
 
-      %nav.grid-docs-nav.border-r.overflow-y-auto.relative.bg-gray-100
+      %nav{ :data => { :role => "side-navigation"}, :class => "grid-docs-nav border-r overflow-y-auto relative bg-gray-100" }
         = partial "docsearch"
         = partial "side_nav"
 
