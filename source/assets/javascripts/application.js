@@ -2,7 +2,9 @@ import "./jquery"
 import Cookies from "./js.cookie"
 import "./navigation_store"
 import "./dl_header"
+import "./logged_in_switcher"
 import { loadAnalyticsScripts } from "./analytics"
+import { userSignedIn } from "./helpers/userSignedIn"
 
 $(document).ready(function() {
   var navigationElement = $("nav");
@@ -34,7 +36,7 @@ $(document).ready(function() {
   navigationElements.each(function() {
     var element = $(this).next();
     if(NavigationStore.fetch(element.data("menu"))) {
-      element.addClass("hidden");
+     element.addClass("hidden");
     }
   });
 
@@ -52,13 +54,7 @@ $(document).ready(function() {
   });
   navigationElement.scrollTop(getScrollPosition());
 
-  let userSignedIn = Cookies.get("appsignal_signed_in") == "true";
-  if(userSignedIn) {
-    $(".logged-in").show();
-    $(".logged-out").hide();
-  }
-
-  if (userSignedIn || Cookies.get("cookie_consent") == "true") {
+  if (userSignedIn() || Cookies.get("cookie_consent") == "true") {
     $("#cookies").hide();
     loadAnalyticsScripts();
   }
