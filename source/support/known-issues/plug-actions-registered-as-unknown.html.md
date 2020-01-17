@@ -14,11 +14,16 @@ In versions before version 1.5.0-beta.1, `Appsignal.Plug` used the request metho
 
 ## Workaround
 
-To override the "unknown" action name, use `Appsignal.Transaction.set_action/1` from anywhere within the action.
+To override the "unknown" action name, use `Appsignal.Plug.set_action/2` from anywhere within the action.
 
 ```elixir
 get "/users/:id" do
-  Appsignal.Transaction.set_action("GET /users/:id")
-  send_resp(conn, 200, "Welcome")
+  conn
+  |> Appsignal.Plug.set_action("GET /users/:id")
+  |> send_resp(200, "Welcome")
 end
 ```
+
+-> **Note**: `Appsignal.Plug.set_action/2` was added in version 1.12.0 of the
+AppSignal for Elixir package. Use `Appsignal.Transaction.set_action/1` on
+earlier versions.

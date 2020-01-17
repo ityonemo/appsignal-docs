@@ -30,8 +30,12 @@ use the `Appsignal.Plug` module.
 
 The Plug integration [doesn’t automatically extract the request’s action
 name](https://docs.appsignal.com/support/known-issues/plug-actions-registered-as-unknown.html).
-Call `Appsignal.Transaction.set_action/1` in your action to set the action name
+Call `Appsignal.Plug.set_action/2` in your action to set the action name
 for your requests to prevent your requests to be categorised as “unknown”.
+
+-> **Note**: `Appsignal.Plug.set_action/2` was added in version 1.12.0 of the
+AppSignal for Elixir package. Use `Appsignal.Transaction.set_action/1` on
+earlier versions.
 
 ``` elixir
 defmodule AppsignalPlugExample do
