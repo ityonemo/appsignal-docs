@@ -24,6 +24,22 @@ A list of Applications appears on the [Application index] and in the application
 
 To add a new Application to AppSignal, please follow the [add a new application setup wizard](/application/new-application.html).
 
+When adding a new application you'll have to decide if you would like a separate application, or a new namespace for an existing applicaiton
+
+There are a couple of advantages and downsides for both options described below:
+
+### Separate applications
+
+The most common setup is to create a [new application](new-application.html) for each "app" in your ecosystem. E.g. if you have microservices, each microservice would be it's own app. This allows owners to cusomize who has access to each application and teams are able to setup their own notification settings and integrations.
+
+The downside is that it's harder to correlate data and it can be cumbersome to setup integration for each app.
+
+### One app with multiple namespaces
+
+Another option is to override the [namespace](namespaces.html) for applications, this will ensure they end up in the same application. This option is less commonly used but can be a good alternative for apps that have a separate project to handle parts of your ecosystem.
+
+For example we use Rust for our metrics processing and it's monitored by AppSignal in a `processor` namespace of the main application. This way we can correlate metrics between background processing and web requests. We also inherit all the integrations and notifiers, making them easier to maintain.
+
 ## Environments
 
 An application can have multiple [environments](/appsignal/terminology.html#environments) as long as every environment uses the same application name. Every environment is currently listed separately on the [Application index].
